@@ -35,6 +35,60 @@ procedure leer (var );
       end;
     end;writeln();
   end;
+procedure regATexto (var celular:regCelular; var architxt:txt); //.txt con formato de 2 lineas
+  begin
+    write(architxt,celular.codigo);write(architxt,' ');
+    write(architxt,celular.precio:6:2);write(architxt,' ');
+    write(architxt,celular.marca);write(architxt,' ');
+    write(architxt,celular.nombre);write(architxt,' ');    
+    write(architxt,sLineBreak);
+    write(architxt,celular.stockDis);write(architxt,' ');
+    write(architxt,celular.stockMin);write(architxt,' ');
+    write(architxt,celular.descrip);write(architxt,' ');
+    write(architxt,sLineBreak);
+  end;
+procedure crearTxt (var architxt:txt); //falta abrir y cerrar el archivo en main
+  var
+    celular:regCelular;
+  begin    
+    leerCelular(celular);
+    while (celular.codigo<>000) do begin
+      regATexto(celular,architxt);
+      leerCelular(celular);
+    end;
+  end;
+procedure crearBinario (var archivo:bin; var txt:text); //archivo de registros a partir de .txt
+  var
+    nombre:string; celular:regCelular;
+  begin
+    write('Ingrese el nombre del archivo binario: ');readln(nombre);
+    assign(archivo,nombre);
+    rewrite(archivo);
+    reset(txt);
+    while (not eof(txt)) do begin
+      with celular do begin
+        readln(txt,codigo,precio,marca,nombre);
+        readln(txt,stockDis,stockMin,descrip);
+      end;
+      write(archivo,celular);
+    end;
+    close(txt);
+    close(archivo);writeln();
+  end;
+procedure exportarTodos (var archibin:bin); //exportar binario a .txt
+  var
+    celular:regCelular; txt:text;
+  begin
+    assign(txt,'celular.txt');
+    rewrite(txt);
+    reset(archibin);
+    while (not eof(archibin)) do begin
+      read(archibin,celular);
+      regATexto(celular,txt);
+    end;
+    close(txt);
+    close(archibin);
+  end;
 procedure insertar (var A:arbol; objeto:regObjeto);   // crear arbol
   begin
     if (A=nil) then begin
