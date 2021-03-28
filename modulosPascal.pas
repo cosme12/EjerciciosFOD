@@ -75,19 +75,56 @@ procedure crearBinario (var archivo:bin; var txt:text); //archivo de registros a
     close(txt);
     close(archivo);writeln();
   end;
-procedure exportarTodos (var archibin:bin); //exportar binario a .txt
-  var
-    celular:regCelular; txt:text;
+procedure regATexto (var alumno:regAlumno; var txt:text); //para listar
   begin
-    assign(txt,'celular.txt');
+    write(txt,'Codigo de alumno: ');write(txt,alumno.codigo);write(txt,'\n');
+    write(txt,'Nombre: ');write(txt,alumno.nombre);write(txt,'\n');
+    write(txt,'Apellido: ');write(txt,alumno.apellido);write(txt,'\n');
+    write(txt,'Cursadas: ');write(txt,alumno.cursadas);write(txt,'\n');    
+    write(txt,'Finales: ');write(txt,alumno.finales);write(txt,'\n');write(txt,'\n');   
+  end;
+procedure exportarTodos (var archivo:bin);   //exportar binario a .txt
+  var
+    alumno:regAlumno; txt:text; nombre:string;
+  begin
+    write('Ingrese el nombre del archivo .txt: ');readln(nombre);
+    assign(txt,nombre);
     rewrite(txt);
-    reset(archibin);
-    while (not eof(archibin)) do begin
-      read(archibin,celular);
-      regATexto(celular,txt);
+    reset(archivo);
+    while (not eof(archivo)) do begin
+      read(archivo,alumno);
+      regATexto(alumno,txt);
     end;
     close(txt);
-    close(archibin);
+    close(archivo);
+  end;
+procedure desplegarMenu (var archivo:bin; var txt:text);
+  var
+    opcion:integer;
+  begin
+    writeln('1. Crear un archivo de registros.');
+    writeln('2. Listar los celulares con stock menor al minimo.');
+    writeln('3. Listar los celulares que tengan descripcion.');
+    writeln('4. Exportar el archivo de registros a un txt.');
+    writeln('5. Anadir uno o mas celulares.');
+    writeln('6. Modificar el stock disponible de un celular.');
+    writeln('7. Exportar los celulares sin stock a txt.');
+    writeln('0. Salir.');writeln();
+    write('Opcion: ');readln(opcion);writeln();
+    if (opcion<>0) then begin
+      case opcion of
+        1: crearBinario(archivo,txt);
+        2: listarCelularesStock(archivo);
+        3: listarCelularesDescrip(archivo);
+        4: exportarTodos(archivo);
+        5: anadirCelulares(archivo);
+        6: modificarStock(archivo);
+        7: exportarSinStock(archivo);
+        else
+          writeln('Opcion incorrecta.');writeln();
+      end;
+      desplegarMenu(archivo,txt);
+    end;  
   end;
 procedure insertar (var A:arbol; objeto:regObjeto);   // crear arbol
   begin
