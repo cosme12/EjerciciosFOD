@@ -1,4 +1,4 @@
-program p2ej2;  //creo que bien. falta el actualizar
+program p2ej2;  //bien
 type
 regAlumno=record
   codigo,cursadas,finales:integer;
