@@ -98,6 +98,25 @@ procedure exportarTodos (var archivo:bin);   //exportar binario a .txt
     close(txt);
     close(archivo);
   end;
+procedure actualizarMaestro (var maestro,detalle:bin); //con un solo detalle
+  var
+    regMaestro,regDetalle:regAlumno;
+  begin
+    reset(maestro);
+    reset(detalle);
+    while not eof(detalle) do begin
+      read(maestro,regMaestro);
+      read(detalle,regDetalle);
+      while regMaestro.codigo <> regDetalle.codigo do begin
+        read(maestro,regMaestro);
+      end;
+      //asignar los valores que haga falta
+      seek(maestro,filepos(maestro)-1);
+      write(maestro,regMaestro);
+    end;
+    close(maestro);
+    close(detalle);
+  end;
 procedure desplegarMenu (var archivo:bin; var txt:text);
   var
     opcion:integer;
