@@ -1,4 +1,4 @@
-program p2ej2;  //creo que bien. falta el actualizar
+program p2ej2;  //bien
 type
 regAlumno=record
   codigo,cursadas,finales:integer;
@@ -7,10 +7,8 @@ end;
 bin = file of regAlumno;
 procedure crearBinario (var archivo:bin; var txt:text);
   var
-    nombre:string; alumno:regAlumno;
+    alumno:regAlumno;
   begin
-    write('Ingrese el nombre del archivo binario: ');readln(nombre);
-    assign(archivo,nombre);
     rewrite(archivo);
     reset(txt);
     while (not eof(txt)) do begin
@@ -116,8 +114,8 @@ procedure desplegarMenu (var masbin,detbin:bin; var mastxt,dettxt:text);
 var
   masbin,detbin:bin; mastxt,dettxt:text;
 begin
-  assign(masbin,'maestrop2ej2');
-  assign(detbin,'detallep2ej2');
+  assign(masbin,'maestrop2ej2.dat');
+  assign(detbin,'detallep2ej2.dat');
   assign(mastxt,'maestrop2ej2.txt');
   assign(dettxt,'detallep2ej2.txt');
   crearBinario(masbin,mastxt);
