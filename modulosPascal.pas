@@ -117,6 +117,39 @@ procedure actualizarMaestro (var maestro,detalle:bin); //con un solo detalle
     close(maestro);
     close(detalle);
   end;
+procedure leer (var detalle:binDetalle; var producto:regProducto);
+  begin
+    if (not eof(detalle)) then
+      read(detalle,producto)
+    else
+      producto.codigo:=valoralto;
+  end;
+procedure actualizarMaestro (var maestro:bin; var detalle:binDetalle); //con un detalle pero varios registros detalle por cada maestro
+  var
+    prodM:regProducto; prodD:regDetalle; aux,total:integer;
+  begin
+    reset(maestro);
+    reset(detalle);
+    read(maestro,prodM);
+    leer(detalle,prodD);
+    while (proD <> valoralto) do begin
+      aux:=prodD.codigo;
+      total:=0;
+      while (aux=prodD.codigo) do begin
+        total:=total+proD.cantVendida;
+        leer(detalle,prodD);
+      end;
+      while (prodM.codigo <> aux) do
+        read(maestro,prodM);
+      prodM.stockDis:=prodM.stockDis - total;
+      seek(maestro,filepos(maestro)-1);
+      write(maestro,prodM);
+      if (not eof(maestro)) then
+        read(maestro,prodM);
+    end;
+    close(maestro);
+    close(detalle);
+  end;
 procedure desplegarMenu (var archivo:bin; var txt:text);
   var
     opcion:integer;
@@ -482,28 +515,3 @@ var
 begin
 
 end.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

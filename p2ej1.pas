@@ -48,6 +48,24 @@ procedure compactarIngresos (var archivo,archivoNuevo:bin);
     close(archivo);
     close(archivoNuevo);
   end;
+procedure compactarIngresos (var archivo,archivoNuevo:bin);
+  var
+    ingreso,actual:regIngreso; 
+  begin
+    reset(archivo);
+    rewrite(archivoNuevo);
+    while (not eof(archivo)) do begin
+      read(archivo,ingreso);
+      read(archivo,actual);
+      while (actual.codigo = ingreso.codigo) do begin
+        ingreso.monto:=ingreso.monto+actual.monto;
+        read(archivo,actual);
+      end;
+      write(archivoNuevo,ingreso)
+    end;
+    close(archivo);
+    close(archivoNuevo);
+  end;
 procedure imprimir (var archivo:bin);
   var
     ingreso:regIngreso;
