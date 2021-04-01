@@ -1,4 +1,6 @@
-program p2ej1; //no se por que me tira un runtime error
+program p2ej1; //falta probarlo pero creo que bien
+const
+valoralto = 9999;
 type
 regIngreso=record
   codigo:integer; nombre:string; monto:real;
@@ -28,40 +30,19 @@ procedure cargarArchivo (var archivo:bin);
   end;
 procedure compactarIngresos (var archivo,archivoNuevo:bin);
   var
-    cantPos:integer; ingreso,ingresoSig:regIngreso;
+    cantPos:integer; ingreso,ingresoNuevo:regIngreso;
   begin
     reset(archivo);
     rewrite(archivoNuevo);
-    while not eof(archivo) do begin
-      read(archivo,ingreso);
-      read(archivo,ingresoSig);
-      cantPos:=1;
+    leer(archivo,ingreso);
+    while (ingreso.codigo <> valoralto) do begin
+      ingresoNuevo.nombre:=ingreso.nombre;
+      ingresoNuevo.monto:=0;
       while (ingreso.codigo = ingresoSig.codigo) do begin
-        ingreso.monto:=ingreso.monto+ingresoSig.monto;
-        ingreso.nombre:=ingreso.nombre+', '+ingresoSig.nombre;
-        cantPos:=cantPos+1;
-        read(archivo,ingresoSig);
+        ingresoNuevo.monto:=ingresoNuevo.monto+ingreso.monto;
+        leer(archivo,ingreso);
       end;
-      seek(archivo,filepos(archivo)-cantPos);
       write(archivoNuevo,ingreso);
-    end;
-    close(archivo);
-    close(archivoNuevo);
-  end;
-procedure compactarIngresos (var archivo,archivoNuevo:bin);
-  var
-    ingreso,actual:regIngreso; 
-  begin
-    reset(archivo);
-    rewrite(archivoNuevo);
-    while (not eof(archivo)) do begin
-      read(archivo,ingreso);
-      read(archivo,actual);
-      while (actual.codigo = ingreso.codigo) do begin
-        ingreso.monto:=ingreso.monto+actual.monto;
-        read(archivo,actual);
-      end;
-      write(archivoNuevo,ingreso)
     end;
     close(archivo);
     close(archivoNuevo);
