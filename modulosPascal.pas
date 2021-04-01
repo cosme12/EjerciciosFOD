@@ -124,6 +124,45 @@ procedure leer (var detalle:binDetalle; var producto:regProducto);
     else
       producto.codigo:=valoralto;
   end;
+procedure minimo (var V:vectorDeDetalles; var min:regDetalle);
+  var
+    i,iMin,valorMin:integer; Vreg:vectorDeRegistros;
+  begin
+    valorMin:=9999;
+    for i:= 1 to cantDetalles do begin
+      leer(V[i],Vreg[i]);
+      if (Vreg[i].codigo <> valoralto) & (Vreg[i].codigo > valorMin) then begin
+        valorMin:=Vreg[i].codigo;
+        iMin:=i;
+      end;
+    end;
+    min:=V[iMin];
+    leer(V[iMin],Vreg[iMin]);
+  end;
+procedure crearMaestro (var maestro:bin; var V:vectorDeDetalles); //merge
+  var
+    regM:regSesion; regD:regDetalle; i:integer;
+  begin
+    rewrite(maestro);
+    for i:= 1 to cantDetalles do
+      reset(V[i]);
+    minimo(V,regD);
+    while (regD.codigo <> valoralto) do begin
+      regM.codigo:=regD.codigo;
+      regM.tiempoTotal:=0;
+      while (regM.codigo = regD.codigo) do begin
+        regM.fecha:=regD.fecha;
+        while (regD.codigo = regD.codigo) & (regM.fecha = regD.fecha) do begin
+          regM.tiempoTotal:=regM.tiempoTotal + regD.tiempo;
+          minimo(V,regD);
+        end;        
+      end;     
+      write(maestro,prodM); 
+    end;
+    close(maestro);
+    for i:= 1 to cantDetalles do
+      close(V[i]);
+  end;
 procedure actualizarMaestro (var maestro:bin; var detalle:binDetalle); //con un detalle pero varios registros detalle por cada maestro
   var
     prodM:regProducto; prodD:regDetalle; aux,total:integer;
