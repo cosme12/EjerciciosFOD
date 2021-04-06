@@ -1,4 +1,4 @@
-program p2ej3; //creo que bien pero no se puede probar. compila
+program p2ej3; //creo que bien pero no se puede probar. compila. al parecer hay que hacerlo usando el procedimiento minmo, no se como seria
 const
 valoralto = 9999;
 type
