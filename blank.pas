@@ -1,4 +1,6 @@
 program blank;
+const
+valoralto = 
 type
 
 procedure
