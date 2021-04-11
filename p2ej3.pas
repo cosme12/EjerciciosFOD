@@ -2,6 +2,7 @@ program p2ej3; //creo que bien pero no se puede probar. compila. al parecer hay 
 //hay que hacer una especie de merge acumulador, para no recorrer el maestro 30 veces
 const
 valoralto = 9999;
+cantDetalles = 30;
 type
 regProducto=record
   codigo,stockMin,stockDis:integer; precio:real;
@@ -12,7 +13,7 @@ regDetalle=record
 end;
 bin = file of regProducto;
 binDetalle = file of regDetalle;
-vector = array [1..30] of binDetalle;
+vector = array [1..cantDetalles] of binDetalle;
 procedure leer (var detalle:binDetalle; var producto:regDetalle);
   begin
     if (not eof(detalle)) then
@@ -20,14 +21,14 @@ procedure leer (var detalle:binDetalle; var producto:regDetalle);
     else
       producto.codigo:=valoralto;
   end;
-{procedure minimo (var V:vectorDeDetalles; var min:regDetalle);
+procedure minimo (var V:vectorDeDetalles; var min:regDetalle);
   var
     i,iMin,valorMin:integer; Vreg:vectorDeRegistros;
   begin
     valorMin:=9999;
     for i:= 1 to cantDetalles do begin
       leer(V[i],Vreg[i]);
-      if (Vreg[i].codigo <> valoralto) & (Vreg[i].codigo > valorMin) then begin
+      if (Vreg[i].codigo <> valoralto) & (Vreg[i].codigo < valorMin) then begin
         valorMin:=Vreg[i].codigo;
         iMin:=i;
       end;
@@ -49,7 +50,7 @@ procedure mergeAcumulador (var maestro:bin; var V:vectorDeDetalles);
       end;
       agregarAtras(L,ult,actual);
     end;
-  end;}
+  end;
 procedure actualizarMaestro (var maestro:bin; var V:vector);
   var
     prodM:regProducto; prodD:regDetalle; i,aux,total:integer;

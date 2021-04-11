@@ -131,7 +131,7 @@ procedure minimo (var V:vectorDeDetalles; var min:regDetalle);
     valorMin:=9999;
     for i:= 1 to cantDetalles do begin
       leer(V[i],Vreg[i]);
-      if (Vreg[i].codigo <> valoralto) & (Vreg[i].codigo > valorMin) then begin
+      if (Vreg[i].codigo <> valoralto) & (Vreg[i].codigo < valorMin) then begin
         valorMin:=Vreg[i].codigo;
         iMin:=i;
       end;
