@@ -13,7 +13,8 @@ regDetalle=record
 end;
 bin = file of regProducto;
 binDetalle = file of regDetalle;
-vector = array [1..cantDetalles] of binDetalle;
+vectorDeDetalles = array [1..cantDetalles] of binDetalle;
+vectorDeRegistros = array [1..cantDetalles] of regDetalle;
 procedure leer (var detalle:binDetalle; var producto:regDetalle);
   begin
     if (not eof(detalle)) then
@@ -36,6 +37,20 @@ procedure minimo (var V:vectorDeDetalles; var min:regDetalle);
     min:=V[iMin];
     leer(V[iMin],Vreg[iMin]);
   end;
+procedure actualizarMaestro (var maestro:bin; var VD:vectorDeDetalles; var VR:vectorDeRegistros);
+  var
+    i:integer;
+  begin
+    for i:= 1 to cantDetalles do begin
+      reset(VD[i]);
+    end;
+    reset(maestro);
+    
+    for i:= 1 to cantDetalles do begin
+      close(VD[i]);
+    end;
+    close(maestro);
+  end;
 procedure mergeAcumulador (var maestro:bin; var V:vectorDeDetalles);
   var
     actual,min:regObjeto; ult:lista;
@@ -51,7 +66,7 @@ procedure mergeAcumulador (var maestro:bin; var V:vectorDeDetalles);
       agregarAtras(L,ult,actual);
     end;
   end;
-procedure actualizarMaestro (var maestro:bin; var V:vector);
+procedure actualizarMaestro (var maestro:bin; var V:vectorDeDetalles);
   var
     prodM:regProducto; prodD:regDetalle; i,aux,total:integer;
   begin
@@ -80,7 +95,7 @@ procedure actualizarMaestro (var maestro:bin; var V:vector);
     close(maestro);    
   end;
 var
-  maestro:bin; V:vector;
+  maestro:bin; V:vectorDeDetalles;
 begin
   assign(maestro,'maestrop2ej3.dat');
   actualizarMaestro(maestro,V);
