@@ -24,7 +24,7 @@ procedure leer (var detalle:binDetalle; var producto:regDetalle);
   end;
 procedure minimo (var VD:vectorDeDetalles; var VR:vectorDeRegistros; var min:regDetalle);
   var
-    i,iMin,valorMin:integer; Vreg:vectorDeRegistros;
+    i,iMin,valorMin:integer;
   begin
     valorMin:=9999;
     for i:= 1 to cantDetalles do begin
