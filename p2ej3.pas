@@ -22,7 +22,7 @@ procedure leer (var detalle:binDetalle; var producto:regDetalle);
     else
       producto.codigo:=valoralto;
   end;
-procedure minimo (var V:vectorDeDetalles; var min:regDetalle);
+procedure minimo (var VD:vectorDeDetalles; var VR:vectorDeRegistros; var min:regDetalle);
   var
     i,iMin,valorMin:integer; Vreg:vectorDeRegistros;
   begin
