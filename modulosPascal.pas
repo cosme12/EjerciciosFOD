@@ -28,6 +28,7 @@ vectorDeListas=array [rango] of lista; // para insertar ordenado
 procedure leer (var );
   begin
     with  do begin
+      writeln('Ingrese:');
       write(': ');readln();
       if (<>) then begin
         write(': ');readln();
