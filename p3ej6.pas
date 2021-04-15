@@ -51,7 +51,7 @@ procedure crearMaestroNuevo (var maestro,maestroNuevo:bin);
     rewrite(maestroNuevo);
     leer(maestro,prenda);
     while (prenda.codigo<>valoralto) do begin
-      if (prenda.codigo>0) then
+      if (prenda.stock>0) then
         write(maestroNuevo,prenda);
       leer(maestro,prenda);
     end;
