@@ -118,6 +118,14 @@ procedure actualizarMaestro (var maestro,detalle:bin); //con un solo detalle
     close(maestro);
     close(detalle);
   end;
+function valorEntero (texto:string):integer; //devuelve el numero string en integer. si el string no es un numero, devuelve 0
+  var
+    valor,codigoError:integer;
+  begin
+    valor:=0;
+    val(texto,valor,codigoError);
+    valorEntero:=valor;
+  end;
 procedure leer (var detalle:binDetalle; var producto:regProducto);
   begin
     if (not eof(detalle)) then
