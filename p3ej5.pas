@@ -5,7 +5,7 @@ function valorEntero (texto:string):integer;
   var
     valor,codigoError:integer;
   begin
-    valor:=0;
+    valor:=-1;
     val(texto,valor,codigoError);
     valorEntero:=valor;
   end;
@@ -15,15 +15,15 @@ procedure agregar (var archivo:bin);
   begin    
     reset(archivo);
     read(archivo,titulo);
-    if (valorEntero(titulo)<>0) then begin
+    if (valorEntero(titulo)<>-1) then begin
       pos:=valorEntero(titulo);
       seek(archivo,pos);
       read(archivo,titulo);
-      posInicio:=titulo;
+      posInicio:=valorEntero(titulo);
       write('Ingrese el titulo a agregar: ');readln(titulo);
       write(archivo,titulo);
       seek(archivo,0);
-      titulo:=posInicio;
+      Str(posInicio,titulo);
       write(archivo,titulo);
     end
     else begin
@@ -33,7 +33,7 @@ procedure agregar (var archivo:bin);
     end;    
     close(archivo);
   end;
-procedure eliminar (var archivo:bin); //hasta la linea 46 creo que esta bien, lo demas falta
+procedure eliminar (var archivo:bin); 
   var
     titulo,tituloAEliminar:string; pos,posInicio:integer;
   begin
@@ -44,11 +44,11 @@ procedure eliminar (var archivo:bin); //hasta la linea 46 creo que esta bien, lo
     while (titulo<>tituloAEliminar) do
       read(archivo,titulo);
     pos:=(filepos(archivo)-1)*(-1);
-    titulo.codigo:=posInicio;
+    Str(posInicio,titulo);
     seek(archivo,filepos(archivo)-1);
     write(archivo,titulo);
     seek(archivo,0);
-    titulo.codigo:=pos;
+    Str(pos,titulo);
     write(archivo,titulo);
     close(archivo);
   end;
@@ -59,14 +59,15 @@ procedure listar (var archivo:bin);
     reset(archivo);
     read(archivo,titulo);
     while (not eof(archivo)) do begin
-      if (valorEntero(titulo)=0 and titulo<>'0') then
+      if ((valorEntero(titulo)=0) and (titulo<>'0')) then
         writeln('Titulo: ',titulo);
       read(archivo,titulo);
     end;
     close(archivo);
   end;
 var
-
+  archivo:bin;
 begin
-
+  assign(archivo,'p3ej5.dat');
+  eliminar(archivo);
 end.
