@@ -21,6 +21,7 @@ procedure agregar (var archivo:bin);
       read(archivo,titulo);
       posInicio:=valorEntero(titulo);
       write('Ingrese el titulo a agregar: ');readln(titulo);
+      seek(archivo,filepos(archivo)-1);
       write(archivo,titulo);
       seek(archivo,0);
       Str(posInicio,titulo);
