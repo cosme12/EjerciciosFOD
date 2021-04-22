@@ -5,7 +5,7 @@ function valorEntero (texto:string):integer;
   var
     valor,codigoError:integer;
   begin
-    valor:=0;
+    valor:=-1;
     val(texto,valor,codigoError);
     valorEntero:=valor;
   end;
@@ -15,15 +15,16 @@ procedure agregar (var archivo:bin);
   begin    
     reset(archivo);
     read(archivo,titulo);
-    if (valorEntero(titulo)<>0) then begin
+    if (valorEntero(titulo)<>-1) then begin
       pos:=valorEntero(titulo);
       seek(archivo,pos);
       read(archivo,titulo);
-      posInicio:=titulo;
+      posInicio:=valorEntero(titulo);
       write('Ingrese el titulo a agregar: ');readln(titulo);
+      seek(archivo,filepos(archivo)-1);
       write(archivo,titulo);
       seek(archivo,0);
-      titulo:=posInicio;
+      Str(posInicio,titulo);
       write(archivo,titulo);
     end
     else begin

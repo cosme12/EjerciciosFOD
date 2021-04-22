@@ -47,6 +47,7 @@ procedure agregarNovela (var archivo:bin); //primera vez que implemento este mod
       read(archivo,novela);
       posInicio:=novela.codigo;
       leerNovela(novela);
+      seek(archivo,filepos(archivo)-1);
       write(archivo,novela);
       seek(archivo,0);
       novela.codigo:=posInicio;
