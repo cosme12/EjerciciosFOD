@@ -44,6 +44,10 @@ procedure compactar (var archivo:bin);
         posActual:=filepos(archivo)-1;
         seek(archivo,filesize(archivo)-cantPosiciones);
         read(archivo,especie);
+        while (especie.codigo < 0) do begin
+          seek(archivo,filepos(archivo)-2);
+          read(archivo,especie);
+        end;
         seek(archivo,posActual);
         write(archivo,especie);
         cantPosiciones:=cantPosiciones+1;
