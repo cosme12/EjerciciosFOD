@@ -65,7 +65,7 @@ procedure merge (var maestro:bin; var V:vectorDeDetalles; VR:vectorDeRegistros);
     end;
   end;
 var
-  maestro:bin; VD:vectorDeDetalles; VR:vectorDeRegistros; i:integer;
+  maestro:bin; VD:vectorDeDetalles; VR:vectorDeRegistros; i:integer; iString:string;
 begin
   for i:=1 to cantDetalles do begin
     Str(i,iString);

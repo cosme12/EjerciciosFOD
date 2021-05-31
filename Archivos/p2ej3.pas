@@ -48,7 +48,7 @@ procedure actualizarMaestro (var maestro:bin; var VD:vectorDeDetalles; var VR:ve
       read(maestro,regM);
       while (regM.codigo<>min.codigo) do
         read(maestro,regM);
-      while (regM.codigo=min.codigo) do begin
+      while (min.codigo<>valoralto) and (regM.codigo=min.codigo) do begin
         regM.stockDis:=regM.stockDis - min.cantVendida;
         minimo(VD,VR,min);
       end;
