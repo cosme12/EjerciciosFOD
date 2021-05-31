@@ -18,16 +18,16 @@ procedure leer (var archivo:binD; var pago:regPago);
     if (not eof(archivo)) then
       read(archivo,pago)
     else
-      pago.codigo:=valoralto;
+      pago.dni:=valoralto;
   end;
 procedure minimo (var V:vectorDeDetalles; VR:vectorDeRegistros; var min:regPago);
   var
     i,iMin:integer;
   begin
-    min.codigo:=valoralto;
+    min.dni:=valoralto;
     for i:= 1 to cantDetalles do begin
-      if (VR[i].codigo < min.codigo) then begin
-        min.codigo:=VR[i].codigo;
+      if (VR[i].dni < min.dni) then begin
+        min.dni:=VR[i].dni;
         iMin:=i;
       end;
     end;
@@ -42,14 +42,14 @@ procedure incisoA (var maestro:binM; var V:vectorDeDetalles; VR:vectorDeRegistro
       reset(V[i]);
     end;
     minimo(V,VR,min);
-    while (min.codigo <> valoralto) do begin
-      actual.codigo:=min.codigo;
-      while (min.codigo <> valoralto) and (actual.codigo = min.codigo) do begin
+    while (min.dni <> valoralto) do begin
+      actual.dni:=min.dni;
+      while (min.dni <> valoralto) and (actual.dni = min.dni) do begin
         actual.codCarrera:=min.codCarrera;
         read(maestro,alumno);
-        while (alumno.codigo <> min.codigo) and (alumno.codCarrera <> min.codCarrera) do
+        while (alumno.dni <> min.dni) and (alumno.codCarrera <> min.codCarrera) do
           read(maestro,alumno);
-        while (min.codigo <> valoralto) and (actual.codigo = min.codigo) and (actual.codCarrera = min.codCarrera) do begin
+        while (min.dni <> valoralto) and (actual.dni = min.dni) and (actual.codCarrera = min.codCarrera) do begin
           alumno.montoTotalPagado:=alumno.montoTotalPagado + min.montoCuota;
           minimo(V,VR,min);
         end;
